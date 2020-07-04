@@ -1,5 +1,7 @@
 package com.example.activitylifecycle;
 
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
+
+        if(savedInstanceState != null) {
+            textView.setText(savedInstanceState.getString("textToBundle"));
+        }
         Log.d("Lifecycle method: ", "onCreate()");
         textView.append("onCreate()" + "\n");
     }
@@ -57,5 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Lifecycle method: ", "onDestroy()");
         textView.append("onDestroy()" + "\n");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.d("onSaveInstanceState: ", "onDestroy()");
+        textView.append("onSaveInstanceState()" + "\n");
+        outState.putString("textToBundle", textView.getText().toString());
     }
 }
